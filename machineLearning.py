@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import cross_val_score
 import dataMngr as dm
 import compInfo as ci
+import sklearn
 
 # only generated model, doesn't attempt to fit model
 def generateModel(model, modelArrParams, modelDictParams, inData, outData):
