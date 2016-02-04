@@ -18,48 +18,12 @@ def createAndSaveModel(modelDict, indata, outdata, outDict = ''):
 #outdata = load(ci.dataDirectory + ci.outputDataPath)
 
 
+# testingdata = load(ci.dataDirectory + ci.testingInputPathFixed)
+
+# mArr = [load(ci.modelsDirectory + 'adaboostrfd_10_t_10_f_50.mod'), load(ci.modelsDirectory + 'adaboostrfd_10_t_200_f_10.mod')]
 
 
-"""
-# createAndSaveModel(models['RandomForest200'], indata, outdata, 
-#                   ci.outputDataDirectory)
-                   
-# createAndSaveModel(models['NaiveBayesGaussian'], indata, outdata, 
-#                   ci.outputDataDirectory)
-
-multilayerPerceptrons = ['MultilayerPerceptronStandard', 'MultilayerPerceptron10050',
-       'MultilayerPerceptron20050', 'MultilayerPerceptron200100']
-       
-for mlp in multilayerPerceptrons:
-    createAndSaveModel(models[mlp], indata, outdata, ci.outputDataDirectory)
-    
-
-
-
-GDmodel = createAndSaveModel(models['GradientDescent'], indata, outdata, 
-                   ci.outputDataDirectory)
-print "done with GDmodel"
-KMeans = createAndSaveModel(models['KMeans'], indata, outdata, ci.outputDataDirectory)
-"""
-
-#mArr = ['MultilayerPerceptronStandard', 'MultilayerPerceptron10050', 
-#         'MultilayerPerceptron20050', 'MultilayerPerceptron200100']
-
-# mArr = ['AdaboostRFd_10_t_10_f_50', 'AdaboostRFd_10_t_200_f_10']
-# modelArr = []
-
-# for modelDict in mArr:
-#     m = models[modelDict]
-#     model = createAndSaveModel( m, indata, outdata, 
-#                    ci.modelsDirectory)
-#     modelArr.append(model)
-
-testingdata = load(ci.dataDirectory + ci.testingInputPathFixed)
-
-mArr = [load(ci.modelsDirectory + 'adaboostrfd_10_t_10_f_50.mod'), load(ci.modelsDirectory + 'adaboostrfd_10_t_200_f_10.mod')]
-
-
-for i in xrange(len(mArr)):
-    m = models[mArr[i]]
-    model = modelArr[i]
-    ML.generateTestOutput(model, testingdata, ci.outputTestingDirectory + m['savedModelFileName'] + '.csv')
+# for i in xrange(len(mArr)):
+#     m = models[mArr[i]]
+#     model = modelArr[i]
+#     ML.generateTestOutput(model, testingdata, ci.outputTestingDirectory + m['savedModelFileName'] + '.csv')
