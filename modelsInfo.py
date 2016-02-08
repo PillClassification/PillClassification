@@ -10,6 +10,19 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.cluster import KMeans
 
 models = {
+    'RandomForest10':{
+        'modelName':'rForest_n_10',
+        'modelArrParameters': None,
+        'modelDictParameters':{
+            'n_estimators':10,
+            'n_jobs': -1
+        },
+        'model': RandomForestClassifier,
+        'savedModelFileName':'rForest_n_10.mod',
+        'percentYesCorrect': None,
+        'percentNoCorrect': None, 
+        'numInstances': None, 
+    },
     'RandomForest200':{
         'modelName':'rForest_n_200',
         'modelArrParameters': None,
@@ -22,7 +35,7 @@ models = {
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
         'numInstances': None, 
-            },
+    },
     'RandomForest200Entropy':{
         'modelName':'rForest_n_200_Ent',
         'modelArrParameters': None,

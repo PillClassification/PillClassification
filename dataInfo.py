@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import dataMngr as dm
 
 columnInfo = {'extraneous':[],
             'target':['target_pill'],

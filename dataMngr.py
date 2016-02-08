@@ -50,8 +50,8 @@ def makeDFFromCSV():
     dfTraining = file2Dataframe(ci.originalDataDirectory + ci.trainingPathCSV)
     dfTesting = file2Dataframe(ci.originalDataDirectory + ci.testingInputPathCSV)
     print "still working"
-    save(outputDataDirectory + "dataFrameTraining.df", dfTraining)
-    save(outputDataDirectory + "dataFrameTesting.df", dfTesting)
+    save(ci.outputTestingDirectory + "dataFrameTraining.df", dfTraining)
+    save(ci.outputTestingDirectory + "dataFrameTesting.df", dfTesting)
     print "stilll work"    
     
 def insertFirstRow(fp):
@@ -65,10 +65,10 @@ def insertFirstRow(fp):
   data.insert(0, firstRow)
   writeToDataPath(data, ci.originalDataDirectory + "processed.csv")
 
-def changeClassNames(fp, dic):
-    data = file2Data(fp)
+def changeClassNames(orig_fp, new_fp, dic):
+    data = file2Data(orig_fp)
     data = changeOutputToDict(data, dic)
-    writeToDataPath(data, fp)
+    writeToDataPath(data, new_fp)
     return data
 
 def changeOutputToDict(data,dic):
@@ -117,9 +117,9 @@ def makeFileName(inFileName, train=True):
     
     outputFileName = None
     if train:
-        outputFileName = outputDataDirectory + fileName + '_output.np'
+        outputFileName = ci.outputTestingDirectory + fileName + '_output.np'
     
-    inputFileName = outputDataDirectory + fileName + '_input.np'
+    inputFileName = ci.outputTestingDirectory + fileName + '_input.np'
     
     return inputFileName, outputFileName
 
@@ -167,10 +167,10 @@ def saveModelInfo(fileName, modelInfo):
 
 def makeTestingDF():
     makeDFFromCSV()
-    trainingDF = load(ci.outputDataDirectory + 'dataFrameTraining.df')
-    testingDF = load(ci.outputDataDirectory + 'dataFrameTesting.df')
+    trainingDF = load(ci.outputTestingDirectory + 'dataFrameTraining.df')
+    testingDF = load(ci.outputTestingDirectory + 'dataFrameTesting.df')
     testingData = processTesting(testingDF, trainingDF)
-    save(ci.outputDataDirectory + ci.testingInputPathFitted, testingData)
+    save(ci.outputTestingDirectory + ci.testingInputPathFitted, testingData)
     print testingData.shape
 
 def saveCSVasNP(csvFile):
