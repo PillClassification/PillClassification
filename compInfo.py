@@ -2,7 +2,6 @@
 
 outputTestingDirectory = '../iProcessedData/'
 originalDataDirectory = '../SampleData/'
-dataDirectory = '../iProcessedData/'
-outputDataDirectory = '../iProcessedData/'
 modelsDirectory = '../Models/'
+pillData = 'data_HIV_5class_testdata.csv'
 

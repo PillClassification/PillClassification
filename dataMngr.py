@@ -7,8 +7,8 @@ import compInfo as ci
 from os import path
 from dataInfo import columnInfo
 from sklearn.feature_extraction import DictVectorizer as DV
-from compInfo import outputDataDirectory
 from os.path import splitext
+
 def preprocess(fileName, train=True):
     df = file2Dataframe(fileName)
     inputArr, outputArr = processDataframeForNP(df, train)
@@ -50,10 +50,34 @@ def makeDFFromCSV():
     dfTraining = file2Dataframe(ci.originalDataDirectory + ci.trainingPathCSV)
     dfTesting = file2Dataframe(ci.originalDataDirectory + ci.testingInputPathCSV)
     print "still working"
-    save(outputDataDirectory + "dataFrameTraining.df", dfTraining)
-    save(outputDataDirectory + "dataFrameTesting.df", dfTesting)
+    save(ci.outputTestingDirectory + "dataFrameTraining.df", dfTraining)
+    save(ci.outputTestingDirectory + "dataFrameTesting.df", dfTesting)
     print "stilll work"    
     
+def insertFirstRow(fp):
+  data = file2Data(fp)
+  firstRow = []
+
+  for x in xrange(len(data[0])-1):
+    firstRow.append("C" + str(x))
+
+  firstRow.append("target_pill")
+  data.insert(0, firstRow)
+  writeToDataPath(data, ci.originalDataDirectory + "processed.csv")
+
+def changeClassNames(orig_fp, new_fp, dic):
+    data = file2Data(orig_fp)
+    data = changeOutputToDict(data, dic)
+    writeToDataPath(data, new_fp)
+    return data
+
+def changeOutputToDict(data,dic):
+    for x in xrange(len(data)):
+        for y in xrange(len(data[x])):
+            if (data[x][y] in dic):
+                data[x][y] = dic[data[x][y]]
+    return data
+
 def processDataframeForNP(df, train=True):
     df = df.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
     
@@ -86,15 +110,16 @@ def load(fileName):
 def seperateTestInputOutput(df):
     pass
 
+
 def makeFileName(inFileName, train=True):
     base=path.basename(inFileName)
     fileName, ext = path.splitext(base)
     
     outputFileName = None
     if train:
-        outputFileName = outputDataDirectory + fileName + '_output.np'
+        outputFileName = ci.outputTestingDirectory + fileName + '_output.np'
     
-    inputFileName = outputDataDirectory + fileName + '_input.np'
+    inputFileName = ci.outputTestingDirectory + fileName + '_input.np'
     
     return inputFileName, outputFileName
 
@@ -105,6 +130,15 @@ def writeToFile(data, writer):
 def writeToFilePath(data, filePath):
     writer = csv.writer(open(filePath, 'wb'))
     writeToFile(data, writer)
+
+def writeToDataFile(data, writer):
+    for el in data:
+        writer.writerow(el)
+
+def writeToDataPath(data, filePath):
+    writer = csv.writer(open(filePath, 'wb'))
+    writeToDataFile(data, writer)
+
 
 def saveInputOutput(inA, outA, inFilePath, outFilePath):
     inputFile = csv.writer(open(inFilePath, 'wb'))
@@ -119,7 +153,7 @@ def file2Data(filePath):
         for row in reader:
             fileData.append(row)
     return fileData
-    
+
 def saveModelInfo(fileName, modelInfo):
     #modelInfo is a dict with the following keys:
     #modelName, modelParameters, percentYesCorrect 
@@ -133,10 +167,10 @@ def saveModelInfo(fileName, modelInfo):
 
 def makeTestingDF():
     makeDFFromCSV()
-    trainingDF = load(ci.outputDataDirectory + 'dataFrameTraining.df')
-    testingDF = load(ci.outputDataDirectory + 'dataFrameTesting.df')
+    trainingDF = load(ci.outputTestingDirectory + 'dataFrameTraining.df')
+    testingDF = load(ci.outputTestingDirectory + 'dataFrameTesting.df')
     testingData = processTesting(testingDF, trainingDF)
-    save(ci.outputDataDirectory + ci.testingInputPathFitted, testingData)
+    save(ci.outputTestingDirectory + ci.testingInputPathFitted, testingData)
     print testingData.shape
 
 def saveCSVasNP(csvFile):
