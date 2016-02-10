@@ -11,8 +11,13 @@ def createAndSaveModel(modelDict, indata, outdata, fp):
     save(fp + modelDict['savedModelFileName'], model)
     return model
 
-inData,outData = dm.preprocess(ci.originalDataDirectory + "fullData.csv")
-createAndSaveModel(models["RandomForest10"], inData, outData, ci.outputTestingDirectory)
+
+def generateModels(modelDicts, indata, outdata, fp):
+  for modelDict in modelNames:
+    createAndSaveModel(modelDict, indata, outdata, fp)
+
+#inData,outData = dm.preprocess(ci.originalDataDirectory + "fullData.csv")
+#createAndSaveModel(models["RandomForest10"], inData, outData, ci.outputTestingDirectory)
 
 #fullData = dm.changeClassNames(ci.originalDataDirectory + "fullData.csv", ci.originalDataDirectory + "fullDataNorm.csv", di.pillClasses)
 #outputData = dm.changeClassNames(ci.originalDataDirectory + "outputData.csv", ci.originalDataDirectory + "outputDataNorm.csv", di.pillClasses)

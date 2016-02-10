@@ -9,3 +9,5 @@ def makeTestOutput(modelfp, inTestFileName, outTestFileName):
 
 
 # dm.saveCSVasNP(ci.originalDataDirectory + "processed.csv")
+
+ML.generateTestOutput(dm.load(ci.modelsDirectory + "rForest_n_10.mod"), dm.load(ci.outputTestingDirectory + 'fullData_input.np'), ci.outputTestingDirectory + 'modelData_output.csv')
