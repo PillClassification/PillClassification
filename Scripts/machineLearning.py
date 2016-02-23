@@ -43,24 +43,3 @@ def generateTestOutput(generatedModel, inData, outDataName):
   outData = generatedModel.predict(inData)
   dm.writeToFilePath(outData, outDataName)
 
-def fixContNaNColoumns(data, col, rows):
-  for row in rows:
-    data[row][col] = 0
-  sumCol = sum(data[:, col])
-  numRows, _ = data.shape
-  numRows = numRows - len(rows)
-  avg = sumCol/numRows
-  for row in rows:
-    data[row][col] = avg
-  return data
-
-def oneShotFixContNaNColoumns():
-  print 'starting'
-  fileName = ci.outputDataDirectory + ci.testingInputPathFitted
-  testInput = dm.load(fileName)
-  print 'loaded'
-  print testInput.shape
-  testInput = fixContNaNColoumns(testInput, 6, [425936, 617750, 734618])
-  dm.save(ci.outputDataDirectory + ci.testingInputPathFixed, testInput)
-  print 'done'
-
