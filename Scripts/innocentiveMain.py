@@ -3,6 +3,7 @@ import dataMngr as dm
 import compInfo as ci
 import machineLearning as ML
 import sklearn.metrics as stats
+from modelsInfo import models as mi
 
 def makeTestOutput(modelfp, inTestFileName, outTestFileName):
   ML.generateTestOutput(dm.load(modelfp), dm.load(inTestFileName), outTestFileName)
@@ -15,6 +16,9 @@ def pickleData(fp):
 
 def generateTestOutput(modelfp, testOutfp, inData):
   ML.generateTestOutput(dm.load(modelfp), inData, testOutfp)
+
+
+print ML.checkCrossValidation(ci.outputTestingDirectory + "data_HIV_5class_processed_input.np", ci.outputTestingDirectory + "data_HIV_5class_processed_output.np", mi["AdaboostRFd_10_t_200_f_10"], 10)
 
 #------- Preprocess and insert first row ---------------#
 # dm.insertFirstRow(ci.originalDataDirectory + "data_HIV_5class.csv")
@@ -29,5 +33,6 @@ def generateTestOutput(modelfp, testOutfp, inData):
 #ML.generateTestOutput(dm.load(ci.modelsDirectory + "adaboostrfd_10_t_200_f_10.mod"), inData, ci.outputTestingDirectory + "testingOutputAdaboost.csv")
 
 #------------ Compare Score to actual data ------------------------------#
-print stats.accuracy_score(dm.load(ci.outputTestingDirectory + 'data_HIV_5class_processed_output.np'), dm.file2Data(ci.outputTestingDirectory + 'testingOutputAdaboost.csv'))
+# print stats.accuracy_score(dm.load(ci.outputTestingDirectory + 'data_HIV_5class_processed_output.np'), dm.file2Data(ci.outputTestingDirectory + 'testingOutputAdaboost.csv'))
+#print stats.accuracy_score(dm.file2Data(ci.originalDataDirectory + 'data_HIV_5class_processed_output.csv'), dm.file2Data(ci.outputTestingDirectory + 'testingOutputAdaboost.csv'))
 # can just do sklearn.metrics.accuracy_score

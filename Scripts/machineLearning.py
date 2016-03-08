@@ -4,6 +4,15 @@ from sklearn.cross_validation import cross_val_score
 import dataMngr as dm
 import compInfo as ci
 import sklearn
+from sklearn import metrics
+from sklearn import cross_validation as cv
+
+def generateUnfittedModel(model, modelArrParams, modelDictParams):
+    if modelArrParams is None:
+      modelArrParams = []
+    if modelDictParams is None:
+      modelDictParams = {}
+    return model(*modelArrParams, **modelDictParams)
 
 # only generated model, doesn't attempt to fit model
 def generateModel(model, modelArrParams, modelDictParams, inData, outData):
@@ -43,3 +52,8 @@ def generateTestOutput(generatedModel, inData, outDataName):
   outData = generatedModel.predict(inData)
   dm.writeToFilePath(outData, outDataName)
 
+def checkCrossValidation(inDatafp, outDatafp, modelInfo, numFolds):
+  inData = dm.load(inDatafp)
+  outData = dm.load(outDatafp).ravel()
+  model = generateUnfittedModel(modelInfo["model"], modelInfo["modelArrParameters"], modelInfo["modelDictParameters"])
+  return cv.cross_val_score(model, inData, outData, cv=numFolds)
